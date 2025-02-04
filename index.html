@@ -50,11 +50,15 @@
         h1 {
             font-weight: 700;
             margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #333;
+            animation: fadeIn 2s ease-in-out;
         }
 
         .button-container {
             display: flex;
             gap: 20px;
+            animation: slideUp 1.5s ease-in-out;
         }
 
         button {
@@ -86,7 +90,7 @@
         #no:hover {
             background-color: #c82333;
         }
-        
+
         .floating-text {
             position: absolute;
             font-size: 22px;
@@ -94,7 +98,17 @@
             color: rgba(0, 0, 0, 0.6);
             animation: floatText 6s infinite alternate ease-in-out;
         }
-        
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes floatText {
             0% { transform: translateY(-10px) translateX(-10px); opacity: 0.8; }
             50% { transform: translateY(10px) translateX(10px); opacity: 1; }
@@ -131,17 +145,30 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const words = ["Finance", "Best Manager", "Human Resources", "Public & International Relations", "Marketing", "Strategic Management"];
+            const words = [
+                { english: "Finance", french: "Finance" },
+                { english: "Best Manager", french: "Meilleur Manager" },
+                { english: "Human Resources", french: "Ressources Humaines" },
+                { english: "Public & International Relations", french: "Relations Publiques & Internationales" },
+                { english: "Marketing", french: "Marketing" },
+                { english: "Strategic Management", french: "Gestion Stratégique" }
+            ];
+
             words.forEach((word, index) => {
                 let span = document.createElement("span");
                 span.classList.add("floating-text");
-                span.innerText = word;
+                span.innerText = word.english;
                 
                 span.style.left = Math.random() * 90 + "%";
                 span.style.top = Math.random() * 90 + "%";
                 span.style.animationDuration = (Math.random() * 3 + 4) + "s";
                 
                 document.body.appendChild(span);
+
+                // Toggle between English and French text
+                setInterval(() => {
+                    span.innerText = span.innerText === word.english ? word.french : word.english;
+                }, 500); // Change text every 500ms
             });
         });
     </script>
